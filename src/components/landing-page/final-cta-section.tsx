@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, ArrowLeft } from "lucide-react";
 
@@ -9,7 +10,7 @@ export const FinalCTASection = () => {
   return (
     <section id="final-cta" className="py-16 md:py-24 bg-accent text-accent-foreground">
       <div className="container mx-auto px-4 text-center">
-        <AlertTriangle className="h-16 w-16 text-primary mx-auto mb-6" />
+        <AlertTriangle className="h-12 w-12 sm:h-16 sm:w-16 text-primary mx-auto mb-6 animate-bounce" />
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           لا تفوتي الفرصة! العرض على وشك الانتهاء!
         </h2>
@@ -18,12 +19,12 @@ export const FinalCTASection = () => {
         </p>
         <Button 
           size="lg" 
-          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-10 py-6 text-xl font-semibold shadow-lg transition-transform transform hover:scale-105"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 sm:px-10 py-5 sm:py-6 text-lg sm:text-xl font-semibold shadow-lg transition-transform transform hover:scale-105"
           asChild
         >
           <a href={whatsAppLink} target="_blank" rel="noopener noreferrer">
             احجزي مكانك فوراً
-            <ArrowLeft className="mr-2 h-6 w-6 rtl:ml-2 rtl:mr-0" />
+            <ArrowLeft className="mr-2 h-5 w-5 sm:h-6 sm:w-6 rtl:ml-2 rtl:mr-0" />
           </a>
         </Button>
       </div>

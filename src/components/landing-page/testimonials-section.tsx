@@ -1,25 +1,27 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, MessageSquareQuote } from "lucide-react";
 import { AITestimonialGenerator } from "./ai-testimonial-generator";
+import Image from "next/image";
 
 const staticTestimonials = [
   {
     quote: "التصميم أنيق وراقي – حسيت عندي براند عالمي!",
     author: "نجلاء",
-    avatar: "https://placehold.co/100x100/F8E1EA/C9A44C?text=N",
+    avatar: "https://placehold.co/100x100.png", // Removed color params for more general placeholder
     dataAiHint: "woman portrait"
   },
   {
     quote: "صار عندي موقع يخليني أبيع بثقة على واتساب!",
     author: "رهف",
-    avatar: "https://placehold.co/100x100/F8E1EA/C9A44C?text=R",
+    avatar: "https://placehold.co/100x100.png",
     dataAiHint: "woman smiling"
   },
   {
     quote: "التعامل كان احترافي وسريع، والموقع طلع أحلى من ما توقعت. شكرًا زهرة براندينج!",
     author: "سارة",
-    avatar: "https://placehold.co/100x100/F8E1EA/C9A44C?text=S",
-    dataAiHint: "professional woman"
+    avatar: "https://placehold.co/100x100.png",
+    dataAiHint: "business woman" // Adjusted hint for clarity
   }
 ];
 
@@ -36,16 +38,20 @@ export const TestimonialsSection = () => {
             آراء حقيقية من عميلاتنا اللاتي وثقن بنا لتحقيق أحلامهن التجارية.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
           {staticTestimonials.map((testimonial, index) => (
-            <Card key={index} className="shadow-lg rounded-xl overflow-hidden bg-card hover:shadow-xl transition-shadow">
+            <Card key={index} className="shadow-lg rounded-xl overflow-hidden bg-card hover:shadow-xl transition-all duration-300 ease-in-out hover:scale-105 group">
               <CardContent className="p-6 text-center">
-                <img 
-                  src={testimonial.avatar} 
-                  alt={`صورة ${testimonial.author}`} 
-                  data-ai-hint={testimonial.dataAiHint}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-accent object-cover"
-                />
+                <div className="relative w-24 h-24 rounded-full mx-auto mb-4 border-4 border-accent overflow-hidden shadow-md">
+                  <Image 
+                    src={testimonial.avatar} 
+                    alt={`صورة ${testimonial.author}`} 
+                    data-ai-hint={testimonial.dataAiHint}
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
                 <div className="flex justify-center mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />

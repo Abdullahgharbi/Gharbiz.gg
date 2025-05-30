@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Palette, Laptop2, MessageCircleMore, Contact2, Youtube, BadgeCheck, Sparkles } from "lucide-react";
 
@@ -47,11 +48,13 @@ export const FeaturesSection = () => {
             نقدم لك باقة متكاملة من الخدمات الاحترافية لإطلاق علامتك التجارية بقوة وثقة.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden bg-card">
+            <Card key={index} className="shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out rounded-xl overflow-hidden bg-card hover:scale-105 group">
               <CardHeader className="flex flex-col items-center text-center p-6 bg-accent/30">
-                {feature.icon}
+                <div className="transition-transform duration-300 group-hover:scale-110">
+                  {feature.icon}
+                </div>
                 <CardTitle className="mt-4 text-xl font-semibold text-foreground">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent className="p-6 text-center">

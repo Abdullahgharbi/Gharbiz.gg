@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Star } from "lucide-react";
@@ -63,11 +64,11 @@ export const PricingSection = () => {
             اختاري الباقة المثالية التي تلبي احتياجات علامتك التجارية وتساعدك على التألق.
           </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {pricingPackages.map((pkg, index) => (
             <Card 
               key={index} 
-              className={`flex flex-col shadow-lg rounded-xl overflow-hidden transition-all duration-300 ${pkg.highlight ? 'border-2 border-primary scale-105 bg-background' : 'bg-card hover:shadow-xl'}`}
+              className={`flex flex-col shadow-lg rounded-xl overflow-hidden transition-all duration-300 ease-in-out ${pkg.highlight ? 'border-2 border-primary scale-100 md:scale-105 bg-background' : 'bg-card hover:shadow-xl hover:scale-102'}`}
             >
               {pkg.highlight && (
                 <div className="bg-primary text-primary-foreground py-2 px-4 text-sm font-semibold text-center flex items-center justify-center gap-1">
@@ -83,8 +84,8 @@ export const PricingSection = () => {
               <CardContent className="p-6 flex-grow">
                 <ul className="space-y-3">
                   {pkg.features.map((feature, i) => (
-                    <li key={i} className="flex items-center">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 rtl:ml-2 rtl:mr-0 shrink-0" />
+                    <li key={i} className="flex items-start text-right">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 ml-2 rtl:mr-2 rtl:ml-0 shrink-0 mt-1" />
                       <span className="text-foreground/80">{feature}</span>
                     </li>
                   ))}
@@ -93,7 +94,7 @@ export const PricingSection = () => {
               <CardFooter className="p-6 mt-auto">
                 <Button 
                   size="lg" 
-                  className={`w-full rounded-lg text-lg font-semibold ${pkg.highlight ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'bg-accent hover:bg-accent/90 text-accent-foreground'}`}
+                  className={`w-full rounded-lg text-lg font-semibold transition-transform transform hover:scale-105 ${pkg.highlight ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'bg-accent hover:bg-accent/90 text-accent-foreground'}`}
                   asChild
                 >
                   <a href={getWhatsAppLink(pkg.name)} target="_blank" rel="noopener noreferrer">
