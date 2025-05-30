@@ -1,8 +1,8 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, MessageSquareQuote } from "lucide-react";
-// Removed import: import { AITestimonialGenerator } from "./ai-testimonial-generator";
+import { Star, MessageSquareQuote, Edit3 } from "lucide-react";
 import Image from "next/image";
+import { TestimonialSubmissionForm } from "./testimonial-submission-form";
 
 const staticTestimonials = [
   {
@@ -66,13 +66,19 @@ export const TestimonialsSection = () => {
           ))}
         </div>
         
-        {/* Removed the AITestimonialGenerator section below 
         <div className="mt-16 pt-10 border-t border-border">
-          <AITestimonialGenerator />
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 flex items-center justify-center gap-2">
+              <Edit3 className="h-7 w-7 text-primary" />
+              أضيفي شهادتكِ
+            </h3>
+            <p className="text-md text-foreground/70 max-w-xl mx-auto">
+              هل لديك تجربة إيجابية مع خدماتنا؟ شاركينا رأيكِ ليراه الجميع!
+            </p>
+          </div>
+          <TestimonialSubmissionForm />
         </div>
-        */}
       </div>
     </section>
   );
 };
-
