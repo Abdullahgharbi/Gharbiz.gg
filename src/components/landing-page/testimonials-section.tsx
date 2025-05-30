@@ -1,14 +1,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, MessageSquareQuote } from "lucide-react";
-import { AITestimonialGenerator } from "./ai-testimonial-generator";
+// Removed import: import { AITestimonialGenerator } from "./ai-testimonial-generator";
 import Image from "next/image";
 
 const staticTestimonials = [
   {
     quote: "التصميم أنيق وراقي – حسيت عندي براند عالمي!",
     author: "نجلاء",
-    avatar: "https://placehold.co/100x100.png", // Removed color params for more general placeholder
+    avatar: "https://placehold.co/100x100.png", 
     dataAiHint: "woman portrait"
   },
   {
@@ -21,7 +21,7 @@ const staticTestimonials = [
     quote: "التعامل كان احترافي وسريع، والموقع طلع أحلى من ما توقعت. شكرًا زهرة براندينج!",
     author: "سارة",
     avatar: "https://placehold.co/100x100.png",
-    dataAiHint: "business woman" // Adjusted hint for clarity
+    dataAiHint: "business woman" 
   }
 ];
 
@@ -66,10 +66,13 @@ export const TestimonialsSection = () => {
           ))}
         </div>
         
+        {/* Removed the AITestimonialGenerator section below 
         <div className="mt-16 pt-10 border-t border-border">
           <AITestimonialGenerator />
         </div>
+        */}
       </div>
     </section>
   );
 };
+
