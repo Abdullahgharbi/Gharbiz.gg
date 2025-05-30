@@ -38,7 +38,7 @@ export default function ZahraBrandingPage() {
       <footer className="py-8 bg-primary text-primary-foreground text-center">
         <div className="container mx-auto px-4">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} زهرة براندينج. جميع الحقوق محفوظة.
+            &copy; {new Date().getFullYear()} Gharbi. جميع الحقوق محفوظة.
           </p>
           <p className="text-xs mt-1">
             تصميم وتطوير بحب <span role="img" aria-label="heart">💖</span>
@@ -48,3 +48,4 @@ export default function ZahraBrandingPage() {
     </div>
   );
 }
+
