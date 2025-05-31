@@ -2,7 +2,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react"; 
+import { useFormStatus } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card"; // Removed CardHeader and CardTitle
 import { handleSubmitTestimonialAction } from "@/app/actions/submitTestimonialAction";
 import type { SubmitTestimonialOutput } from "@/app/actions/submitTestimonialAction";
 import { Loader2, Send } from "lucide-react";
@@ -37,7 +38,7 @@ export const TestimonialSubmissionForm = () => {
   const { toast } = useToast();
   const [submissionResult, setSubmissionResult] = useState<SubmitTestimonialOutput | null>(null);
 
-  const [state, formAction] = useFormState(handleSubmitTestimonialAction, {
+  const [state, formAction] = useActionState(handleSubmitTestimonialAction, {
     data: null,
     error: null,
     fieldErrors: {},
@@ -51,10 +52,12 @@ export const TestimonialSubmissionForm = () => {
     },
     errors: state?.fieldErrors ? 
       Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
-        acc[key as keyof FormData] = { type: 'manual', message: value?.[0] || "خطأ غير معروف" };
+        if (value && value.length > 0) {
+          acc[key as keyof FormData] = { type: 'server', message: value[0] };
+        }
         return acc;
       }, {} as any) 
-      : {},
+      : undefined,
   });
 
   React.useEffect(() => {
@@ -83,15 +86,13 @@ export const TestimonialSubmissionForm = () => {
           }
         }
       }
-  }, [state, toast, form]);
+  }, [state.data, state.error, state.fieldErrors, toast, form.reset, form.setError]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-xl bg-card border-border/50 mt-8">
-      <CardHeader className="pb-4">
-        {/* Title and description moved to TestimonialsSection */}
-      </CardHeader>
+      {/* CardHeader was removed as title/description moved to TestimonialsSection */}
       <form action={formAction}>
-        <CardContent className="space-y-6 pt-0">
+        <CardContent className="space-y-6 pt-6"> {/* Added pt-6 since CardHeader is removed */}
           <div className="space-y-2">
             <Label htmlFor="authorName" className="text-muted-foreground">اسمك</Label>
             <Input
@@ -122,12 +123,12 @@ export const TestimonialSubmissionForm = () => {
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4 pt-2">
+        <CardFooter className="flex flex-col gap-4 pt-2 pb-6 px-6"> {/* Ensured consistent padding */}
           <SubmitButton />
         </CardFooter>
       </form>
       {submissionResult && !state.error && (
-        <div className="p-4 border-t border-border/20 mt-4 text-center">
+        <div className="p-4 border-t border-border/20 text-center">
           <p className="text-primary">{submissionResult.message}</p>
         </div>
       )}

@@ -1,7 +1,9 @@
+
 "use client";
 
 import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react"; 
+import { useFormStatus } from "react-dom"; 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,7 +39,7 @@ export const AITestimonialGenerator = () => {
   const [generatedTestimonial, setGeneratedTestimonial] = useState<GenerateTestimonialOutput | null>(null);
   const { toast } = useToast();
 
-  const [state, formAction] = useFormState(handleGenerateTestimonialAction, {
+  const [state, formAction] = useActionState(handleGenerateTestimonialAction, { 
     data: null,
     error: null,
     fieldErrors: {},
@@ -50,12 +52,15 @@ export const AITestimonialGenerator = () => {
       slogan: "",
       preferredColors: "",
     },
+    // Pass server-side errors for initial validation display
     errors: state?.fieldErrors ? 
       Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
-        acc[key as keyof FormData] = { type: 'manual', message: value?.[0] || "خطأ غير معروف" };
+        if (value && value.length > 0) {
+          acc[key as keyof FormData] = { type: 'server', message: value[0] };
+        }
         return acc;
       }, {} as any) 
-      : {},
+      : undefined,
   });
 
   React.useEffect(() => {
@@ -65,7 +70,7 @@ export const AITestimonialGenerator = () => {
         title: "🎉 تم إنشاء الشهادة بنجاح!",
         description: "يمكنك الآن استخدام الشهادة الجديدة.",
       });
-      form.reset(); // Reset form fields on successful generation
+      form.reset(); 
     } else if (state.error) {
       toast({
         title: "⚠️ فشل إنشاء الشهادة",
@@ -73,7 +78,7 @@ export const AITestimonialGenerator = () => {
         variant: "destructive",
       });
     }
-     // Update form errors based on server response
+    
     if (state.fieldErrors) {
         for (const [fieldName, errors] of Object.entries(state.fieldErrors)) {
           if (errors && errors.length > 0) {
@@ -84,9 +89,7 @@ export const AITestimonialGenerator = () => {
           }
         }
       }
-
-
-  }, [state, toast, form]);
+  }, [state.data, state.error, state.fieldErrors, toast, form.reset, form.setError]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-xl bg-card">
