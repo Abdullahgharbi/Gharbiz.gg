@@ -6,17 +6,9 @@ import { TestimonialsSection } from "@/components/landing-page/testimonials-sect
 import { FinalCTASection } from "@/components/landing-page/final-cta-section";
 import { FloatingWhatsAppButton } from "@/components/landing-page/floating-whatsapp-button";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function GharbiBrandingPage() {
-  const navLinks = [
-    { href: "#features", label: "خدماتنا" },
-    { href: "#pricing", label: "الباقات" },
-    { href: "#testimonials", label: "آراء العملاء" },
-    { href: "#final-cta", label: "تواصل معنا" },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-sans overflow-x-hidden">
       
@@ -41,7 +33,16 @@ export default function GharbiBrandingPage() {
       <FloatingWhatsAppButton />
       
       <footer className="py-8 border-t border-border/20 text-center">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 flex flex-col items-center">
+          <div className="mb-4">
+            <Image
+              src="/logo.png"
+              alt="Gharbi Branding Logo Small"
+              width={60}
+              height={60}
+              data-ai-hint="monogram logo"
+            />
+          </div>
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Gharbi. جميع الحقوق محفوظة.
           </p>

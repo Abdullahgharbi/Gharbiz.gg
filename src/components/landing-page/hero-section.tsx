@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react"; 
+import Image from "next/image";
 
 export const HeroSection = () => {
   const whatsAppNumber = "966500000000"; 
@@ -10,9 +11,20 @@ export const HeroSection = () => {
   return (
     <section 
       id="hero" 
-      className="min-h-[calc(100vh-4rem)] md:min-h-[calc(85vh-4rem)] flex items-center justify-center py-16 md:py-24 bg-background animate-in fade-in zoom-in-95 duration-500"
+      className="min-h-[calc(100vh-4rem)] md:min-h-[calc(85vh-4rem)] flex flex-col items-center justify-center py-16 md:py-24 bg-background animate-in fade-in zoom-in-95 duration-500"
     >
       <div className="container mx-auto px-4 text-center">
+        <div className="mb-8">
+          <Image
+            src="/logo.png" 
+            alt="Gharbi Branding Logo"
+            width={180} 
+            height={180}
+            className="mx-auto"
+            data-ai-hint="monogram logo"
+            priority
+          />
+        </div>
         <h1 className="text-sm sm:text-base md:text-lg font-mono text-primary mb-4 tracking-wider">
           مرحباً بك، أنا غربي.
         </h1>
