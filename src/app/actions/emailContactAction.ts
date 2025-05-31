@@ -33,10 +33,16 @@ export async function handleEmailContactAction(
     return { data: null, error: "الرجاء التحقق من المدخلات.", fieldErrors: validationResult.error.flatten().fieldErrors };
   }
 
+  const intendedRecipient = "abdullah92gharbi@gmail.com";
+
   try {
-    // In a real application, you would integrate with an email sending service here.
+    // In a real application, you would integrate with an email sending service here
+    // to send the email to `intendedRecipient`.
     // For this example, we'll just log the data to the console and simulate success.
-    console.log("New contact form submission received:", validationResult.data);
+    console.log(
+      `New contact form submission received. Intended recipient: ${intendedRecipient}. Data:`,
+      validationResult.data
+    );
 
     // Simulate a network delay
     await new Promise(resolve => setTimeout(resolve, 700));
