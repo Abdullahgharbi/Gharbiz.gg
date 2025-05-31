@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 300 100% 99.2%; /* Soft White #FFF9F9 */
-    --foreground: 240 10% 3.9%; /* Dark text */
+    --background: 222 70% 10%; /* Dark Navy Blue */
+    --foreground: 225 25% 85%; /* Light Gray-Blue */
 
-    --card: 300 100% 99.2%;
-    --card-foreground: 240 10% 3.9%;
+    --card: 222 60% 15%; /* Slightly Lighter Navy for Cards */
+    --card-foreground: 225 25% 85%;
 
-    --popover: 300 100% 99.2%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: 222 60% 15%;
+    --popover-foreground: 225 25% 85%;
 
-    --primary: 45 48% 54.7%; /* Light Gold #C9A44C */
-    --primary-foreground: 240 10% 3.9%; /* Dark text on gold */
+    --primary: 165 80% 60%; /* Vibrant Teal/Cyan */
+    --primary-foreground: 222 70% 10%; /* Dark text on primary */
 
-    --secondary: 340 68% 96%; /* Lighter Blush Pink */
-    --secondary-foreground: 240 10% 3.9%;
+    --secondary: 222 50% 20%; /* Lighter Navy - for subtle backgrounds or hover */
+    --secondary-foreground: 225 25% 85%;
 
-    --muted: 340 68% 97%; /* Even Lighter Blush Pink */
-    --muted-foreground: 240 4% 46.1%;
+    --muted: 222 40% 25%; /* Muted Navy - for less prominent elements */
+    --muted-foreground: 225 15% 60%; /* Darker Gray-Blue for muted text */
 
-    --accent: 340 67.7% 93.1%; /* Blush Pink #F8E1EA */
-    --accent-foreground: 240 10% 3.9%; /* Dark text on pink */
+    --accent: 260 80% 70%; /* Lavender/Purple Accent */
+    --accent-foreground: 225 25% 95%; /* Light text on accent */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 70% 55%; /* Adjusted Red for dark theme */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 340 20% 88%; /* Subtle pinkish border, slightly lighter for better visibility on soft white */
-    --input: 340 20% 92%; /* Subtle pinkish input background, slightly lighter */
-    --ring: 45 48% 54.7%; /* Light Gold for ring focus */
+    --border: 222 40% 30%; /* Subtle Border Color */
+    --input: 222 50% 18%; /* Input Background - slightly different from card */
+    --ring: 165 80% 60%; /* Teal/Cyan for focus rings */
 
     --radius: 0.5rem;
 
@@ -40,60 +40,17 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 222 70% 8%; /* Even darker for sidebar */
+    --sidebar-foreground: 225 25% 80%;
+    --sidebar-primary: 165 80% 60%;
+    --sidebar-primary-foreground: 222 70% 10%;
+    --sidebar-accent: 222 60% 15%;
+    --sidebar-accent-foreground: 225 25% 85%;
+    --sidebar-border: 222 40% 25%;
+    --sidebar-ring: 165 80% 60%;
   }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 300 100% 99.2%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 300 100% 99.2%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 300 100% 99.2%;
-
-    --primary: 45 48% 54.7%;
-    --primary-foreground: 240 10% 3.9%;
-
-    --secondary: 340 68% 15%;
-    --secondary-foreground: 300 100% 99.2%;
-
-    --muted: 340 68% 12%;
-    --muted-foreground: 300 40% 70%;
-
-    --accent: 340 67.7% 30%; /* Darker Blush Pink */
-    --accent-foreground: 300 100% 99.2%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 340 20% 25%;
-    --input: 340 20% 20%;
-    --ring: 45 48% 54.7%;
-    
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+  /* Removed .dark specific block as the base theme is now dark */
 }
 
 @layer base {
@@ -102,9 +59,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-cairo), Arial, Helvetica, sans-serif;
+    font-family: var(--font-inter), Arial, Helvetica, sans-serif; /* Updated font */
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold;
+    @apply font-semibold text-foreground;
   }
 }

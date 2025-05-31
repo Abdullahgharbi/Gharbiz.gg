@@ -26,7 +26,7 @@ type FormData = z.infer<typeof formSchema>;
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending} className="w-full bg-primary hover:bg-primary/80 text-primary-foreground">
+    <Button type="submit" disabled={pending} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-md">
       {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
       أرسل شهادتك
     </Button>
@@ -63,6 +63,7 @@ export const TestimonialSubmissionForm = () => {
       toast({
         title: "🎉 شكرًا لك!",
         description: state.data.message,
+        variant: "default", 
       });
       form.reset(); 
     } else if (state.error) {
@@ -85,25 +86,20 @@ export const TestimonialSubmissionForm = () => {
   }, [state, toast, form]);
 
   return (
-    <Card className="w-full max-w-lg mx-auto shadow-xl bg-card mt-12">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center text-primary flex items-center justify-center gap-2">
-           شاركنا رأيك!
-        </CardTitle>
-        <CardDescription className="text-center text-foreground/80">
-          نحب أن نسمع عن تجربتك معنا. ساعدنا وساعد الآخرين من خلال مشاركة شهادتك.
-        </CardDescription>
+    <Card className="w-full max-w-lg mx-auto shadow-xl bg-card border-border/50 mt-8">
+      <CardHeader className="pb-4">
+        {/* Title and description moved to TestimonialsSection */}
       </CardHeader>
       <form action={formAction}>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pt-0">
           <div className="space-y-2">
-            <Label htmlFor="authorName" className="text-foreground/90">اسمك</Label>
+            <Label htmlFor="authorName" className="text-muted-foreground">اسمك</Label>
             <Input
               id="authorName"
               name="authorName"
               placeholder="مثال: فاطمة أحمد"
               {...form.register("authorName")}
-              className="bg-background border-input focus:ring-primary"
+              className="bg-input border-border/70 focus:ring-primary text-foreground placeholder:text-muted-foreground/70 rounded-md"
               aria-invalid={form.formState.errors.authorName ? "true" : "false"}
             />
             {form.formState.errors.authorName && (
@@ -111,13 +107,13 @@ export const TestimonialSubmissionForm = () => {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="testimonialText" className="text-foreground/90">شهادتك</Label>
+            <Label htmlFor="testimonialText" className="text-muted-foreground">شهادتك</Label>
             <Textarea
               id="testimonialText"
               name="testimonialText"
               placeholder="اكتب شهادتك هنا..."
               {...form.register("testimonialText")}
-              className="bg-background border-input focus:ring-primary"
+              className="bg-input border-border/70 focus:ring-primary text-foreground placeholder:text-muted-foreground/70 rounded-md"
               rows={5}
               aria-invalid={form.formState.errors.testimonialText ? "true" : "false"}
             />
@@ -126,13 +122,13 @@ export const TestimonialSubmissionForm = () => {
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        <CardFooter className="flex flex-col gap-4 pt-2">
           <SubmitButton />
         </CardFooter>
       </form>
       {submissionResult && !state.error && (
-        <div className="p-6 border-t border-border mt-4 text-center">
-          <p className="text-green-600">{submissionResult.message}</p>
+        <div className="p-4 border-t border-border/20 mt-4 text-center">
+          <p className="text-primary">{submissionResult.message}</p>
         </div>
       )}
     </Card>

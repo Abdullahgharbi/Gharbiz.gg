@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
-import { Cairo } from 'next/font/google';
+import { Inter } from 'next/font/google'; // Changed from Cairo to Inter
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"; // Added Toaster
+import { Toaster } from "@/components/ui/toaster";
 
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  variable: '--font-cairo',
+const inter = Inter({ // Changed font
+  subsets: ['latin'], // Inter supports latin, arabic might need a different font or approach
+  variable: '--font-inter', // Changed variable name
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'زهرة براندينج | تصميم شعار وموقع احترافي',
-  description: 'نصمم لك هوية بصرية وموقع ويب يعكس جمال علامتك التجارية في عالم التجميل. احجزي الآن عرض تصميم الشعار والموقع في 10 أيام فقط!',
-  keywords: ['تصميم شعار', 'تصميم موقع', 'هوية بصرية', 'علامة تجارية', 'مستحضرات تجميل', 'عطور', 'عناية بالبشرة', 'تسويق رقمي', 'سيدات أعمال', 'الشرق الأوسط', 'براندنج', 'زهرة براندينج'],
+  title: 'غربي براندينج | تصميم وتطوير رقمي', // Updated title
+  description: 'نساعدك على بناء حضور رقمي قوي لعلامتك التجارية. تصميم مواقع، هويات بصرية، واستراتيجيات تسويق.', // Updated description
+  keywords: ['تصميم مواقع', 'هوية بصرية', 'تسويق رقمي', 'براندنج', 'تطوير ويب', 'Gharbi Branding', 'غربي براندينج'], // Updated keywords
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${cairo.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
         <Toaster />
       </body>
