@@ -25,9 +25,8 @@ export default function GharbiBrandingPage() {
         <div className="animate-in fade-in-0 slide-in-from-bottom-12 duration-700 delay-300">
           <TestimonialsSection />
         </div>
-        <div className="animate-in fade-in-0 zoom-in-90 duration-700 delay-400">
-         <FinalCTASection />
-        </div>
+        {/* Removed animation wrapper from here to allow individual card animations */}
+        <FinalCTASection />
       </main>
       
       <FloatingWhatsAppButton />

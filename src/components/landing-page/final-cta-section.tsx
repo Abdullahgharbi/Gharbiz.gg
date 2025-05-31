@@ -44,7 +44,8 @@ export const FinalCTASection = () => {
               key={index} 
               className={`bg-card shadow-lg hover:shadow-primary/20 transition-all duration-300 ease-in-out rounded-lg group flex flex-col ${
                 index % 2 === 0 ? 'hover:rotate-2' : 'hover:-rotate-2'
-              } hover:scale-105`}
+              } hover:scale-105 animate-in slide-in-from-right-32 duration-700 ease-out fill-mode-backwards`}
+              style={{ animationDelay: `${index * 150}ms` }}
             >
               <CardContent className="p-6 flex flex-col h-full">
                 <blockquote className="text-lg italic text-foreground/90 mb-4 flex-grow">
