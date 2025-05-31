@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircleMore } from "lucide-react"; 
 
 export const FloatingWhatsAppButton = () => {
-  const whatsAppNumber = "966500000000";
+  const whatsAppNumber = "249903190733"; // Updated WhatsApp number
   const prefilledMessage = encodeURIComponent("مرحباً، لدي استفسار بخصوص خدمات غربي براندينج.");
   const whatsAppLink = `https://wa.me/${whatsAppNumber}?text=${prefilledMessage}`;
 
