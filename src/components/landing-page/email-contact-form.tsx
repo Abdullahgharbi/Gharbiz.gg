@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { handleEmailContactAction, type EmailContactOutput } from "@/app/actions/emailContactAction";
-import { Loader2, MailCheck, Send } from "lucide-react"; // Changed icon
+import { handleEmailContactAction } from "@/app/actions/emailContactAction"; // Removed EmailContactOutput type import
+import { Loader2, MailCheck, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -43,6 +43,16 @@ export const EmailContactForm = () => {
     fieldErrors: {},
   });
 
+  const memoizedFormErrors = React.useMemo(() => {
+    if (!state.fieldErrors) return undefined;
+    return Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
+      if (value && value.length > 0) {
+        acc[key as keyof FormData] = { type: 'server', message: value[0] };
+      }
+      return acc;
+    }, {} as any);
+  }, [state.fieldErrors]);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,14 +61,7 @@ export const EmailContactForm = () => {
       subject: "",
       message: "",
     },
-    errors: state?.fieldErrors ?
-      Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
-        if (value && value.length > 0) {
-          acc[key as keyof FormData] = { type: 'server', message: value[0] };
-        }
-        return acc;
-      }, {} as any)
-      : undefined,
+    errors: memoizedFormErrors,
   });
 
   React.useEffect(() => {
@@ -70,7 +73,7 @@ export const EmailContactForm = () => {
         duration: 5000,
       });
       form.reset();
-    } else if (state.error) {
+    } else if (state.error) { // Handles general error, not field errors
       toast({
         title: "⚠️ خطأ في الإرسال",
         description: state.error,
@@ -78,17 +81,8 @@ export const EmailContactForm = () => {
         duration: 5000,
       });
     }
-    if (state.fieldErrors) {
-      for (const [fieldName, errors] of Object.entries(state.fieldErrors)) {
-        if (errors && errors.length > 0) {
-          form.setError(fieldName as keyof FormData, {
-            type: 'server',
-            message: errors[0],
-          });
-        }
-      }
-    }
-  }, [state, toast, form.reset, form.setError]);
+    // Field errors are now handled declaratively by passing memoizedFormErrors to useForm.
+  }, [state.data, state.error, toast, form.reset]);
 
   return (
     <Card className="w-full max-w-xl mx-auto shadow-xl bg-card border-border/50">

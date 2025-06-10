@@ -2,8 +2,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useActionState } from "react"; 
-import { useFormStatus } from "react-dom"; 
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,12 +39,22 @@ export const AITestimonialGenerator = () => {
   const [generatedTestimonial, setGeneratedTestimonial] = useState<GenerateTestimonialOutput | null>(null);
   const { toast } = useToast();
 
-  const [state, formAction] = useActionState(handleGenerateTestimonialAction, { 
+  const [state, formAction] = useActionState(handleGenerateTestimonialAction, {
     data: null,
     error: null,
     fieldErrors: {},
   });
-  
+
+  const memoizedFormErrors = React.useMemo(() => {
+    if (!state.fieldErrors) return undefined;
+    return Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
+      if (value && value.length > 0) {
+        acc[key as keyof FormData] = { type: 'server', message: value[0] };
+      }
+      return acc;
+    }, {} as any);
+  }, [state.fieldErrors]);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,15 +62,7 @@ export const AITestimonialGenerator = () => {
       slogan: "",
       preferredColors: "",
     },
-    // Pass server-side errors for initial validation display
-    errors: state?.fieldErrors ? 
-      Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
-        if (value && value.length > 0) {
-          acc[key as keyof FormData] = { type: 'server', message: value[0] };
-        }
-        return acc;
-      }, {} as any) 
-      : undefined,
+    errors: memoizedFormErrors,
   });
 
   React.useEffect(() => {
@@ -70,26 +72,17 @@ export const AITestimonialGenerator = () => {
         title: "🎉 تم إنشاء الشهادة بنجاح!",
         description: "يمكنك الآن استخدام الشهادة الجديدة.",
       });
-      form.reset(); 
-    } else if (state.error) {
+      form.reset();
+    } else if (state.error) { // Handles general error, not field errors
       toast({
         title: "⚠️ فشل إنشاء الشهادة",
         description: state.error,
         variant: "destructive",
       });
     }
-    
-    if (state.fieldErrors) {
-        for (const [fieldName, errors] of Object.entries(state.fieldErrors)) {
-          if (errors && errors.length > 0) {
-            form.setError(fieldName as keyof FormData, {
-              type: 'server',
-              message: errors[0],
-            });
-          }
-        }
-      }
-  }, [state.data, state.error, state.fieldErrors, toast, form.reset, form.setError]);
+    // Field errors are now handled declaratively by passing memoizedFormErrors to useForm.
+    // The imperative form.setError calls are removed from here.
+  }, [state.data, state.error, toast, form.reset, setGeneratedTestimonial]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-xl bg-card">

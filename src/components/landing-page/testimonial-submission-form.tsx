@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useActionState } from "react"; 
+import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardFooter } from "@/components/ui/card"; // Removed CardHeader and CardTitle
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { handleSubmitTestimonialAction } from "@/app/actions/submitTestimonialAction";
 import type { SubmitTestimonialOutput } from "@/app/actions/submitTestimonialAction";
 import { Loader2, Send } from "lucide-react";
@@ -43,21 +43,24 @@ export const TestimonialSubmissionForm = () => {
     error: null,
     fieldErrors: {},
   });
-  
+
+  const memoizedFormErrors = React.useMemo(() => {
+    if (!state.fieldErrors) return undefined;
+    return Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
+      if (value && value.length > 0) {
+        acc[key as keyof FormData] = { type: 'server', message: value[0] };
+      }
+      return acc;
+    }, {} as any);
+  }, [state.fieldErrors]);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       authorName: "",
       testimonialText: "",
     },
-    errors: state?.fieldErrors ? 
-      Object.entries(state.fieldErrors).reduce((acc, [key, value]) => {
-        if (value && value.length > 0) {
-          acc[key as keyof FormData] = { type: 'server', message: value[0] };
-        }
-        return acc;
-      }, {} as any) 
-      : undefined,
+    errors: memoizedFormErrors,
   });
 
   React.useEffect(() => {
@@ -66,33 +69,23 @@ export const TestimonialSubmissionForm = () => {
       toast({
         title: "🎉 شكرًا لك!",
         description: state.data.message,
-        variant: "default", 
+        variant: "default",
       });
-      form.reset(); 
-    } else if (state.error) {
+      form.reset();
+    } else if (state.error) { // Handles general error, not field errors
       toast({
         title: "⚠️ حدث خطأ",
         description: state.error,
         variant: "destructive",
       });
     }
-    if (state.fieldErrors) {
-        for (const [fieldName, errors] of Object.entries(state.fieldErrors)) {
-          if (errors && errors.length > 0) {
-            form.setError(fieldName as keyof FormData, {
-              type: 'server',
-              message: errors[0],
-            });
-          }
-        }
-      }
-  }, [state.data, state.error, state.fieldErrors, toast, form.reset, form.setError]);
+    // Field errors are now handled declaratively by passing memoizedFormErrors to useForm.
+  }, [state.data, state.error, toast, form.reset, setSubmissionResult]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-xl bg-card border-border/50 mt-8">
-      {/* CardHeader was removed as title/description moved to TestimonialsSection */}
       <form action={formAction}>
-        <CardContent className="space-y-6 pt-6"> {/* Added pt-6 since CardHeader is removed */}
+        <CardContent className="space-y-6 pt-6">
           <div className="space-y-2">
             <Label htmlFor="authorName" className="text-muted-foreground">اسمك</Label>
             <Input
@@ -123,7 +116,7 @@ export const TestimonialSubmissionForm = () => {
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4 pt-2 pb-6 px-6"> {/* Ensured consistent padding */}
+        <CardFooter className="flex flex-col gap-4 pt-2 pb-6 px-6">
           <SubmitButton />
         </CardFooter>
       </form>
